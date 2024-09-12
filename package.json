@@ -1,0 +1,22 @@
+{
+  "name": "bookify",
+  "version": "1.0.0",
+  "description": "backend for the bookify bookings management system.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "chai": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "mocha": "^10.7.3",
+    "mongoose": "^8.6.2",
+    "nodemon": "^3.1.4",
+    "supertest": "^7.0.0"
+  }
+}
