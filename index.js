@@ -16,7 +16,9 @@ app.use('/', router);
 
 connectToDB();
 
+app.use("/users" , userRoutes);
 app.use("/business", businessRoutes);
+app.use("/staff",router);
 
 app.listen(port, () => {
     console.log(`server is running on port ${3000}`);
