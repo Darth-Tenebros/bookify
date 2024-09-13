@@ -1,7 +1,10 @@
 const express = require('express');
 const router = require('./routes/routes')
+const businessRoutes = require('./routes/business_routes')
 const cors = require('cors');
 const connectToDB = require('./config/config');
+
+const userRoutes = require('./routes/user_routes');
 
 const app = express();
 
@@ -12,7 +15,8 @@ app.use(cors());
 app.use('/', router);
 
 connectToDB();
-app.use("/staff",router)
+
+app.use("/business", businessRoutes);
 
 app.listen(port, () => {
     console.log(`server is running on port ${3000}`);
