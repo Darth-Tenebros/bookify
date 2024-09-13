@@ -4,6 +4,7 @@ const businessRoutes = require('./routes/business_routes')
 const cors = require('cors');
 const connectToDB = require('./config/config');
 
+const userRoutes = require('./routes/user_routes');
 
 const app = express();
 
