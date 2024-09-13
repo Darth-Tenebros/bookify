@@ -7,8 +7,8 @@ const userSchema = new mongoose.Schema({
     contactNumber: { type: String, 
         required: true 
     },
-    role: { type: Date, 
-        required: true 
+    role: { type: String, 
+        // required: true 
     },
   });
   
