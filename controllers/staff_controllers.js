@@ -1,46 +1,96 @@
 const Staff = require('../models/staff_model');
 
+// Create a new staff member
 exports.createStaff = async (req, res) => {
-    try {
-      const staff = new Staff(req.body);
-      const savedStaff = await staff.save();
-      res.status(201).json(savedStaff);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    const { name, business, availableHours } = req.body;
+
+    if (!name || !business || !availableHours) {
+        return res.status(400).send({ message: "All fields are required." });
     }
-  };
+
+    try {
+        const staff = new Staff({ name, business, availableHours });
+        const result = await staff.save();
+        res.status(201).send({ result });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
+};
+
+// Get all staff members
 exports.getAllStaff = async (req, res) => {
     try {
-      const staff = await Staff.find();
-      res.status(200).json(Staff);
+        const staff = await Staff.find({});
+        res.status(200).send({ staff });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        res.status(500).send({ message: "Server error." });
     }
-  };
-exports.deleteStaff = async (req, res) => {
+};
+
+// Get staff member by ID
+exports.getStaffById = async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).send({ message: "Staff ID is required." });
+    }
+
     try {
-      const {id}= req.params;
-      const staff = await Staff.findByIdAndDelete (id);
-      if (!Staff) 
-        return res.status(404).json({message:'Staff not found'});
-      
-      res.status(200).json({message:'Staff successfully deleted'});
+        const staff = await Staff.findById(id);
+        if (!staff) {
+            return res.status(404).send({ message: "Staff member not found." });
+        }
+        res.status(200).send({ staff });
     } catch (error) {
-      res.status(500).json({ message:'Staff deleted' });
+        res.status(500).send({ message: "Server error." });
     }
-  };
-exports.UpdateStaff =  async (req, res) => {
-      const {id}= req.params;
-      const staff = await Staff.findById (id);
-      if (!Staff) {
-        return res.status(404).json({message:'Staff not found'});
-      }
-      const { business, name, position } = req.body;
-      staff.business = business || business.staff;
-      staff.name = name || staff.name;
-      staff.position = position || staff.position
-      ;
-      await staff.save();
-      res.json(staff);
-  };
- 
+};
+
+// Update staff member by ID
+exports.updateStaffById = async (req, res) => {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    if (!id) {
+        return res.status(400).send({ message: "Staff ID is required." });
+    }
+
+    try {
+        const result = await Staff.findByIdAndUpdate(id, updatedData, { new: true });
+        if (!result) {
+            return res.status(404).send({ message: "Staff member not found." });
+        }
+        res.status(200).send({ result });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
+};
+
+// Delete staff member by ID
+exports.deleteStaffById = async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).send({ message: "Staff ID is required." });
+    }
+
+    try {
+        const result = await Staff.findByIdAndDelete(id);
+        if (!result) {
+            return res.status(404).send({ message: "Staff member not found." });
+        }
+        res.status(200).send({ message: "Staff member deleted." });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
+};
+
+// Delete all staff members
+exports.deleteAllStaff = async (req, res) => {
+    try {
+        const result = await Staff.deleteMany({});
+        res.status(200).send({ message: "All staff members deleted." });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
+};

@@ -1,66 +1,98 @@
-const User = require("../models/user_model");
+const User = require('../models/user_model');
 
+// Create a new user
 exports.createUser = async (req, res) => {
-  try {
-    const newUser = new User(req.body);
-    const savedUser = await newUser.save();
-    res.json(savedUser);
-  } catch (error) {
-    res.json({ message: error.message });
-  }
-};
+    const { name, email, password, role } = req.body;
 
-exports.getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.send(users);
-  } catch (error) {
-    res
-      .status(500)
-      .send({ message: "Could not fetch user", error: error.message });
-  }
-};
-
-exports.getOneUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).send({ message: "User not found" });
+    if (!name || !email || !password || !role) {
+        return res.status(400).send({
+            message: "All fields are required."
+        });
     }
-    res.json(user);
-  } catch (error) {
-    res
-      .status(500)
-      .send({ message: "Could not fetch user", error: error.message });
-  }
+
+    try {
+        const user = new User({ name, email, password, role });
+        const result = await user.save();
+        res.status(201).send({ result });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
 };
 
-exports.updateUsers = async (req, res) => {
-  try {
-    const updatedUser = await User.updateOne({ _id: req.params.id });
-    res.json(updatedUser);
-  } catch (error) {
-    res.json({ message: error.message });
-  }
+// Get all users
+exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.status(200).send({ users });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
 };
 
+// Get user by ID
+exports.getUserById = async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).send({ message: "User ID is required." });
+    }
+
+    try {
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).send({ message: "User not found." });
+        }
+        res.status(200).send({ user });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
+};
+
+// Update user by ID
+exports.updateUserById = async (req, res) => {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    if (!id) {
+        return res.status(400).send({ message: "User ID is required." });
+    }
+
+    try {
+        const result = await User.findByIdAndUpdate(id, updatedData, { new: true });
+        if (!result) {
+            return res.status(404).send({ message: "User not found." });
+        }
+        res.status(200).send({ result });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
+};
+
+// Delete user by ID
+exports.deleteUserById = async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).send({ message: "User ID is required." });
+    }
+
+    try {
+        const result = await User.findByIdAndDelete(id);
+        if (!result) {
+            return res.status(404).send({ message: "User not found." });
+        }
+        res.status(200).send({ message: "User deleted." });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
+};
+
+// Delete all users
 exports.deleteAllUsers = async (req, res) => {
-  try {
-    await User.deleteMany({});
-    res.send({ message: "All Users deleted successfully" });
-  } catch (error) {
-    res
-      .status(500)
-      .send({ message: "Could not delete", error: error.message });
-  }
-};
-
-exports.deleteUsers = async (req, res) => {
-  try {
-    const removedUser = await User.deleteOne({ _id: req.params.id });
-    res.json(removedUser);
-  } catch (error) {
-    res.json({ message: error.message });
-  }
+    try {
+        const result = await User.deleteMany({});
+        res.status(200).send({ message: "All users deleted." });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
 };
