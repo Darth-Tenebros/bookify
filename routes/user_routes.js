@@ -6,12 +6,12 @@ router.post("/add", userController.createUser);
 
 router.get("/get-all", userController.getAllUsers);
 
-router.get("/:id", userController.getOneUser);
+router.get("/:id", userController.getUserById);
 
 router.delete("/delete-all", userController.deleteAllUsers);
 
-router.delete("/delete-one/:id", userController.deleteUsers);
+router.delete("/delete-one/:id", userController.deleteUserById);
 
-router.put("/update/:id", userController.updateUsers);
+router.put("/update/:id", userController.updateUserById);
 
 module.exports = router;
