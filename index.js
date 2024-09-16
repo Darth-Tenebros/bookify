@@ -19,7 +19,7 @@ app.use(cors());
 
 connectToDB();
 
-app.use("/api" , userRoutes);
+app.use("/api", userRoutes);
 app.use("/api", businessRoutes);
 app.use("/api", staffRoutes);
 app.use('/api', paymentRoutes);
