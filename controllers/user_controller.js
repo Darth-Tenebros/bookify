@@ -1,6 +1,6 @@
 const User = require('../models/user_model');
 
-// Create a new user
+
 exports.createUser = async (req, res) => {
     const { name, email, password, role } = req.body;
 
@@ -13,13 +13,13 @@ exports.createUser = async (req, res) => {
     try {
         const user = new User({ name, email, password, role });
         const result = await user.save();
-        res.status(201).send({ result });
+        res.status(201).send({ "user":result });
     } catch (error) {
         res.status(500).send({ message: "Server error." });
     }
 };
 
-// Get all users
+
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find({});
@@ -29,7 +29,7 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
-// Get user by ID
+
 exports.getUserById = async (req, res) => {
     const { id } = req.params;
 
@@ -48,7 +48,7 @@ exports.getUserById = async (req, res) => {
     }
 };
 
-// Update user by ID
+
 exports.updateUserById = async (req, res) => {
     const { id } = req.params;
     const updatedData = req.body;
@@ -68,7 +68,7 @@ exports.updateUserById = async (req, res) => {
     }
 };
 
-// Delete user by ID
+
 exports.deleteUserById = async (req, res) => {
     const { id } = req.params;
 
@@ -87,7 +87,7 @@ exports.deleteUserById = async (req, res) => {
     }
 };
 
-// Delete all users
+
 exports.deleteAllUsers = async (req, res) => {
     try {
         const result = await User.deleteMany({});

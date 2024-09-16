@@ -11,7 +11,7 @@ exports.createBooking = async (req, res) => {
     try {
         const booking = new Booking({ user, business, service, staff, date, time, status: 'pending' });
         const result = await booking.save();
-        res.status(201).send({ result });
+        res.status(201).send({ "booking": result });
     } catch (error) {
         res.status(500).send({ message: "Server error." });
     }
@@ -37,10 +37,10 @@ exports.getBookingById = async (req, res) => {
 
     try {
         const booking = await Booking.findById(id);
-        if (!booking) {
+        if(!booking) {
             return res.status(404).send({ message: "Booking not found." });
         }
-        res.status(200).send({ booking });
+        res.status(200).send({ "booking": booking });
     } catch (error) {
         res.status(500).send({ message: "Server error." });
     }

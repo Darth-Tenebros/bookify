@@ -11,7 +11,7 @@ exports.createBusiness = async (req, res) => {
     try {
         const business = new Business({ name, owner, location, contact });
         const result = await business.save();
-        res.status(201).send({ result });
+        res.status(201).send({ "business":result });
     } catch (error) {
         res.status(500).send({ message: "Server error." });
     }

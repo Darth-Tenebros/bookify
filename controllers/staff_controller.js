@@ -4,14 +4,14 @@ const Staff = require('../models/staff_model');
 exports.createStaff = async (req, res) => {
     const { name, business, availableHours } = req.body;
 
-    if (!name || !business || !availableHours) {
+    if (!name || !business) {
         return res.status(400).send({ message: "All fields are required." });
     }
 
     try {
         const staff = new Staff({ name, business, availableHours });
         const result = await staff.save();
-        res.status(201).send({ result });
+        res.status(201).send({ "staff":result });
     } catch (error) {
         res.status(500).send({ message: "Server error." });
     }
