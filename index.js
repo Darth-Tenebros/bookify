@@ -1,5 +1,4 @@
 const express = require('express');
-const router = require('./routes/routes')
 const businessRoutes = require('./routes/business_routes')
 const paymentRoutes = require('./routes/payment_routes');
 const serviceRoutes = require('./routes/service_routes')
@@ -17,7 +16,6 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
-// app.use('/', router);
 
 connectToDB();
 
