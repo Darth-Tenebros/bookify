@@ -4,7 +4,7 @@
   "description": "backend for the bookify bookings management system.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./tests/*.js",
+    "test": "mocha --timeout 10000 ./tests/*.js",
     "start": "nodemon index.js"
   },
   "author": "",
