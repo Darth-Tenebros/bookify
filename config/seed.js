@@ -103,4 +103,6 @@ const seedDatabase = async () => {
 
 // seedDatabase();
 
+//test comment
+
 module.exports = seedDatabase;
