@@ -20,8 +20,8 @@ jobs:
             - name: checkout and run tests
               uses: actions/checkout@v4
             - run: npm i
-            - run: npm start
+            - run: npm start &
             - run: npm test
-
+            - run: kill $(jobs -p)
 
 
