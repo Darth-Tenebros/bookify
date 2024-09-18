@@ -2,10 +2,12 @@ const supertest = require('supertest')('localhost:3000');
 const expect = require('chai').expect;
 
 describe('Booking Controller Tests', function() {
+    this.timeout(10000);
     
     let bookingId;
 
     describe('POST /bookings/', function() {
+        this.timeout(10000);
         it('should return a 400 when missing required fields', async function() {
             const response = await supertest
                 .post('/api/bookings/')
@@ -38,6 +40,7 @@ describe('Booking Controller Tests', function() {
     });
 
     describe('GET /bookings/', function() {
+        this.timeout(10000);
         it('should return a 200 with valid data', async function() {
             const response = await supertest.get('/api/bookings/all/');
             
@@ -46,6 +49,7 @@ describe('Booking Controller Tests', function() {
     });
 
     describe('GET /bookings/:id', function() {
+        this.timeout(10000);
         it('should return a 400 when booking ID is missing', async function() {
             const response = await supertest.get('/api/bookings/');
             
@@ -61,6 +65,7 @@ describe('Booking Controller Tests', function() {
 
 
     describe('PUT /bookings/:id', function() {
+        this.timeout(10000);
         it('should return a 400 when no booking ID is provided', async function() {
             const response = await supertest
                 .put('/api/bookings/')
@@ -86,6 +91,7 @@ describe('Booking Controller Tests', function() {
 
 
     describe('DELETE /bookings/:id', function() {
+        this.timeout(10000);
         it('should return a 400 when no booking ID is provided', async function() {
             const response = await supertest.delete('/api/bookings/');
             

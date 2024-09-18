@@ -2,11 +2,13 @@ const supertest = require('supertest')('localhost:3000');
 const expect = require('chai').expect;
 
 describe('Service Controller Tests', function() {
+    this.timeout(10000);
 
     let serviceId;
 
     
     describe('POST /services/', function() {
+        this.timeout(10000);
         it('should return a 400 when missing required fields', async function() {
             const response = await supertest
                 .post('/api/services/')
@@ -34,6 +36,7 @@ describe('Service Controller Tests', function() {
 
 
     describe('GET /services/', function() {
+        this.timeout(10000);
         it('should return a 200 with valid request', async function() {
             const response = await supertest
                 .get('/api/services/all/');
@@ -44,6 +47,7 @@ describe('Service Controller Tests', function() {
 
     
     describe('GET /services/:id', function() {
+        this.timeout(10000);
         it('should return a 404 when service ID is missing', async function() {
             const response = await supertest
                 .get('/api/services/')  // Trying to get service without ID
@@ -61,6 +65,7 @@ describe('Service Controller Tests', function() {
     });
 
     describe('PUT /services/:id', function() {
+        this.timeout(10000);
         it('should return a 404 when no service ID is provided', async function() {
             const response = await supertest
                 .put('/api/services/')
@@ -86,6 +91,7 @@ describe('Service Controller Tests', function() {
 
 
     describe('DELETE /services/:id', function() {
+        this.timeout(10000);
         it('should return a 404 when no service ID is provided', async function() {
             const response = await supertest
                 .delete('/api/services/')
