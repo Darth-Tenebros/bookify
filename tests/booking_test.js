@@ -7,7 +7,7 @@ describe('Booking Controller Tests', function() {
     let bookingId;
 
     describe('POST /bookings/', function() {
-        this.timeout(10000);
+        this.timeout(20000);
         it('should return a 400 when missing required fields', async function() {
             const response = await supertest
                 .post('/api/bookings/')

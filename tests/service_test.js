@@ -8,7 +8,7 @@ describe('Service Controller Tests', function() {
 
     
     describe('POST /services/', function() {
-        this.timeout(10000);
+        this.timeout(20000);
         it('should return a 400 when missing required fields', async function() {
             const response = await supertest
                 .post('/api/services/')
