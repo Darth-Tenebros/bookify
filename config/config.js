@@ -10,6 +10,7 @@ const connectDB = async function(){
             dbName: "bookify"
         });
     } catch (error) {
+        console.log(error);
         console.log('error connecting to db');
     }
     
