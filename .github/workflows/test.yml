@@ -23,6 +23,9 @@ jobs:
             - run: npm i
             - run: npm start &
             - run: npm test
+              env:
+                CI: true
+                MONGO_DB_CONNSTR: ${{ vars.MONGO_DB_CONNSTR }}
             - run: kill $(jobs -p)
 
 
