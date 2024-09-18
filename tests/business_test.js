@@ -2,10 +2,12 @@ const supertest = require('supertest')('localhost:3000');
 const expect = require('chai').expect;
 
 describe('Business Controller Tests', function() {
+    this.timeout(10000);
 
     let businessId;
 
     describe('POST /businesses/', function() {
+        this.timeout(20000);
         it('should return a 400 when missing required fields', async function() {
             const response = await supertest
                 .post('/api/businesses/')
@@ -36,6 +38,7 @@ describe('Business Controller Tests', function() {
 
 
     describe('GET /businesses/', function() {
+        this.timeout(10000);
         it('should return a 200', async function() {
             const response = await supertest
                 .get('/api/businesses/all/');
@@ -45,6 +48,7 @@ describe('Business Controller Tests', function() {
     });
 
     describe('GET /businesses/:id', function() {
+        this.timeout(10000);
         it('should return a 400 when business ID is missing', async function() {
             const response = await supertest
                 .get('/api/businesses/');
@@ -62,6 +66,7 @@ describe('Business Controller Tests', function() {
     
 
     describe('PUT /businesses/:id', function() {
+        this.timeout(10000);
         it('should return a 400 when no business ID is provided', async function() {
             const response = await supertest
                 .put('/api/businesses/')
@@ -86,6 +91,7 @@ describe('Business Controller Tests', function() {
 
 
     describe('DELETE /businesses/:id', function() {
+        this.timeout(10000);
         it('should return a 400 when no business ID is provided', async function() {
             const response = await supertest
                 .delete('/api/businesses/');

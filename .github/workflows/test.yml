@@ -4,7 +4,8 @@ on: [pull_request]
 
 jobs:
     tests:
-        runs-on: ubuntu@latest
+        runs-on: ubuntu-latest
+        timeout-minutes: 3
 
         env:
             NODE_ENV: test
@@ -20,11 +21,11 @@ jobs:
             - name: checkout and run tests
               uses: actions/checkout@v4
             - run: npm i
+            - run: npm start &
             - run: npm test
               env:
-                  CI: true
-                  MONGO_DB_CONNSTR: ${{ vars.MONGO_DB_CONNSTR }}
+                CI: true
+                MONGO_DB_CONNSTR: ${{ vars.MONGO_DB_CONNSTR }}
             - run: kill $(jobs -p)
-
 
 

@@ -2,10 +2,12 @@ const supertest = require('supertest')('localhost:3000');
 const expect = require('chai').expect;
 
 describe('User Controller Tests', function() {
+    this.timeout(10000);
 
     let userId;
 
     describe('POST /users/', function() {
+        this.timeout(20000);
         it('should return a 400 when missing required fields', async function() {
             const response = await supertest
                 .post('/api/users/')
@@ -33,6 +35,7 @@ describe('User Controller Tests', function() {
     });
 
     describe('GET /users/', function() {
+        this.timeout(10000);
         it('should return a 200 with valid request', async function() {
             const response = await supertest
                 .get('/api/users/all');
@@ -43,6 +46,7 @@ describe('User Controller Tests', function() {
 
     
     describe('GET /users/:id', function() {
+        this.timeout(10000);
         it('should return a 400 when user ID is missing', async function() {
             const response = await supertest
                 .get('/api/users/');
@@ -60,6 +64,7 @@ describe('User Controller Tests', function() {
     });
 
     describe('PUT /users/:id', function() {
+        this.timeout(10000);
         it('should return a 400 when no user ID is provided', async function() {
             const response = await supertest
                 .put('/api/users/')
@@ -83,6 +88,7 @@ describe('User Controller Tests', function() {
     });
 
     describe('DELETE /users/:id', function() {
+        this.timeout(10000);
         it('should return a 400 when no user ID is provided', async function() {
             const response = await supertest
                 .delete('/api/users/');

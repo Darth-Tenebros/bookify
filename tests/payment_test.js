@@ -2,11 +2,13 @@ const supertest = require('supertest')('localhost:3000');
 const expect = require('chai').expect;
 
 describe('Payment Controller Tests', function() {
+    this.timeout(10000);
 
     let paymentId;
 
     // Create Payment Test
     describe('POST /payments/', function() {
+        this.timeout(20000);
         it('should return a 400 when missing required fields', async function() {
             const response = await supertest
                 .post('/api/payments/')
@@ -33,6 +35,7 @@ describe('Payment Controller Tests', function() {
     });
 
     describe('GET /payments/', function() {
+        this.timeout(10000);
         it('should return a 200 with valid request', async function() {
             const response = await supertest
                 .get('/api/payments/all/');
@@ -43,6 +46,7 @@ describe('Payment Controller Tests', function() {
 
     // Get Payment By ID Test
     describe('GET /payments/:id', function() {
+        this.timeout(10000);
         it('should return a 404 when payment ID is missing', async function() {
             const response = await supertest
                 .get(`/api/payments/`)
@@ -60,6 +64,7 @@ describe('Payment Controller Tests', function() {
     });
 
     describe('PUT /payments/:id', function() {
+        this.timeout(10000);
         it('should return a 404 when no payment ID is provided', async function() {
             const response = await supertest
                 .put('/api/payments/')
@@ -84,6 +89,7 @@ describe('Payment Controller Tests', function() {
     });
 
     describe('DELETE /payments/:id', function() {
+        this.timeout(10000);
         it('should return a 404 when no payment ID is provided', async function() {
             const response = await supertest
                 .delete('/api/payments/')

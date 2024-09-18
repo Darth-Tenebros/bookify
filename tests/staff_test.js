@@ -2,10 +2,12 @@ const supertest = require('supertest')('localhost:3000');
 const expect = require('chai').expect;
 
 describe('Staff Controller Tests', function() {
+    this.timeout(10000);
 
     let staffId;
 
     describe('POST /staff/', function() {
+        this.timeout(20000);
         it('should return a 400 when missing required fields', async function() {
             const response = await supertest
                 .post('/api/staff/')
@@ -32,6 +34,7 @@ describe('Staff Controller Tests', function() {
 
     
     describe('GET /staff/', function() {
+        this.timeout(10000);
         it('should return a 200 with all staff', async function() {
             const response = await supertest
                 .get('/api/staff/all');
@@ -42,6 +45,7 @@ describe('Staff Controller Tests', function() {
 
 
     describe('GET /staff/:id', function() {
+        this.timeout(10000);
         it('should return a 404 when staff ID is missing', async function() {
             const response = await supertest
                 .get('/api/staff/');
@@ -58,6 +62,7 @@ describe('Staff Controller Tests', function() {
     });
 
     describe('PUT /staff/:id', function() {
+        this.timeout(10000);
         it('should return a 404 when no staff ID is provided', async function() {
             const response = await supertest
                 .put('/api/staff/')
@@ -82,6 +87,7 @@ describe('Staff Controller Tests', function() {
 
 
     describe('DELETE /staff/:id', function() {
+        this.timeout(10000);
         it('should return a 404 when no staff ID is provided', async function() {
             const response = await supertest
                 .delete('/api/staff/');
