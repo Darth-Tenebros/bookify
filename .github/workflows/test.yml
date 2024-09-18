@@ -3,24 +3,34 @@ name: tests
 on: [pull_request]
 
 jobs:
-    tests:
-        runs-on: ubuntu-latest
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-        strategy:
-            matrix:
-                node-version: [20.x]
-        
+      - name: Install dependencies
+        run: npm ci
 
-        steps:
-            - name: checkout and run tests
-              uses: actions/checkout@v4
-            - run: npm i
-            - run: npm start &
-            - run: npm test
-              env:
-                CI: true
-                MONGO_DB_CONNSTR: ${{ vars.MONGO_DB_CONNSTR }}
-            - run: kill $(jobs -p)
+      - name: Start application
+        run: npm start &
+        env:
+          MONGO_DB_CONNSTR: ${{ secrets.MONGO_DB_CONNSTR }}
 
+      - name: Run tests
+        run: npm test
+        env:
+          CI: true
+          MONGO_DB_CONNSTR: ${{ secrets.MONGO_DB_CONNSTR }}
 
+      - name: Kill background processes
+        if: always()
+        run: kill $(jobs -p)
