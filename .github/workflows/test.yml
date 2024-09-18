@@ -5,11 +5,6 @@ on: [pull_request]
 jobs:
     tests:
         runs-on: ubuntu-latest
-        timeout-minutes: 3
-
-        env:
-            NODE_ENV: test
-            MONGO_DB_CONNSTR: ${{ vars.MONGO_DB_CONNSTR }}
 
 
         strategy:
