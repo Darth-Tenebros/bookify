@@ -31,5 +31,6 @@ jobs:
           CI: true
           MONGO_DB_CONNSTR: ${{ secrets.MONGO_DB_CONNSTR }}
 
-      - name: Kill background processes
-        run: kill $(jobs -p)
+    #   - name: Kill background processes
+    #     run: kill $(jobs -p)
+
