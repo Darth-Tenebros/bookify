@@ -32,5 +32,4 @@ jobs:
           MONGO_DB_CONNSTR: ${{ secrets.MONGO_DB_CONNSTR }}
 
       - name: Kill background processes
-        if: always()
         run: kill $(jobs -p)
