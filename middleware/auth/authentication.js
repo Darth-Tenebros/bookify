@@ -9,6 +9,12 @@ const getUserByEMail = (email) => {
     return userModel.findOne({email:email});
 }
 
+const hashPassword = (password) => {
+    const salt = bcrypt.genSaltSync();
+    const hash = bcrypt.hashSync(password, salt);
+    return hash;
+}
+
 const generateJWTToken = async (user) => {
     const user = await getUserByEMail(user);
 
@@ -22,3 +28,44 @@ const generateJWTToken = async (user) => {
         }
     );
 }
+
+
+const login = async (req, res) => {
+    const {email, password} = req.body;
+
+    if(!email || ! password){
+        return res.status(400).send({
+            message: "you need to provide all details"
+        })
+    }
+
+    let user = await getUserByEMail(user);
+    user = user._doc;
+    if(!user){
+        return res.status(404).send({
+            message: `no user with email ${email} has been found`
+        })
+    }
+
+    
+    const isValid = bcrypt.compareSync(password, user.password);
+    if(isValid){
+        const token = generateJWTToken(user);
+        res.cookie('token', token, {
+            httpOnly: true,
+            sameSite: 'Strict',
+            maxAge: 3600000
+        })
+        return res.status(200)
+        .json({
+            data: user.role,
+            token: token
+        })
+    }
+
+    return res.status(401)
+    .send({
+        message: "invalid credentials"
+    });
+}
+module.exports = {login, generateJWTToken, hashPassword}
