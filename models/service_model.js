@@ -5,6 +5,10 @@ const serviceSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    description: {
+      type: String,
+      required: false
+    },
     duration: {
       type: Number, // in minutes
       required: true
