@@ -2,14 +2,14 @@ const Service = require('../models/service_model');
 
 
 exports.createService = async (req, res) => {
-    const { name, duration, price, business, image } = req.body;
+    const { name, description, duration, price, business, image } = req.body;
 
     if (!name || !duration || !price || !business) {
         return res.status(400).send({ message: "All fields are required." });
     }
 
     try {
-        const service = new Service({ name, duration, price, business, image });
+        const service = new Service({ name, description, duration, price, business, image });
         const result = await service.save();
         res.status(201).send({ service: result });
     } catch (error) {
