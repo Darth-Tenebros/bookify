@@ -2,9 +2,14 @@ const express = require('express');
 const businessRoutes = require('./routes/business_routes')
 const paymentRoutes = require('./routes/payment_routes');
 const serviceRoutes = require('./routes/service_routes')
-const bookingRoutes = require('./routes/booking_router');
+const bookingRoutes = require('./routes/booking_routes');
 const staffRoutes = require('./routes/staff_routes');
 const userRoutes = require('./routes/user_routes');
+
+const {login} = require('./middleware/auth/authentication');
+
+const router = express.Router();
+router.post('/login', login);
 
 const cors = require('cors');
 const connectToDB = require('./config/config');
@@ -19,6 +24,7 @@ app.use(cors());
 
 connectToDB();
 
+app.use("/api", router);
 app.use("/api", userRoutes);
 app.use("/api", businessRoutes);
 app.use("/api", staffRoutes);
