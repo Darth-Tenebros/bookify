@@ -22,7 +22,7 @@ exports.createUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({});
+        const users = await User.find({}).select('-password');
         res.status(200).send({ users });
     } catch (error) {
         res.status(500).send({ message: "Server error." });
@@ -38,7 +38,7 @@ exports.getUserById = async (req, res) => {
     }
 
     try {
-        const user = await User.findById(id);
+        const user = await User.findById(id).select('-password');
         if (!user) {
             return res.status(404).send({ message: "User not found." });
         }
@@ -58,7 +58,7 @@ exports.updateUserById = async (req, res) => {
     }
 
     try {
-        const result = await User.findByIdAndUpdate(id, updatedData, { new: true });
+        const result = await User.findByIdAndUpdate(id, updatedData, { new: true }).select('-password');
         if (!result) {
             return res.status(404).send({ message: "User not found." });
         }
@@ -77,7 +77,7 @@ exports.deleteUserById = async (req, res) => {
     }
 
     try {
-        const result = await User.findByIdAndDelete(id);
+        const result = await User.findByIdAndDelete(id).select('-password');
         if (!result) {
             return res.status(404).send({ message: "User not found." });
         }
