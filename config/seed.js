@@ -6,6 +6,10 @@ const Staff = require('../models/staff_model');
 const Booking = require('../models/booking_model');
 const Payment = require('../models/payment_model');
 
+const {hashPassword} = require('../middleware/auth/authentication');
+
+
+
 const connectToDB = require('./config');
 connectToDB();
 
@@ -22,8 +26,10 @@ const seedDatabase = async () => {
 
         // Seed Users
         const users = await User.insertMany([
-            { name: 'Alice Smith', email: 'alice@example.com', password: 'password1', role: 'customer' },
-            { name: 'Bob Johnson', email: 'bob@example.com', password: 'password2', role: 'business_owner' }
+            { name: 'Alice Smith', email: 'alice@example.com', password: hashPassword('password1'), role: 'customer' },
+            { name: 'Bob Johnson', email: 'bob@example.com', password: hashPassword('password2'), role: 'business_owner' },
+            { name: 'james allison', email: 'james@example.com', password: hashPassword('password3'), role: 'business_owner' },
+            { name: 'toto wolff', email: 'toto@example.com', password: hashPassword('password4'), role: 'business_owner' }
         ]);
 
         // Seed Businesses
