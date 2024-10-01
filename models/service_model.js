@@ -17,7 +17,11 @@ const serviceSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Business',
       required: true
-    }
+    },
+    image: {
+      type: String,
+      required: false
+    },
   }, { timestamps: true });
   
   module.exports = mongoose.model('Service', serviceSchema);
