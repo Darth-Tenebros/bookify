@@ -5,7 +5,7 @@ const SECRET_KEY = "supersecuresecretkey";
 
 const userModel = require('../../models/user_model');
 
-const getUserByEMail = (email) => {
+const getUserByEmail = (email) => {
     return userModel.findOne({email:email});
 }
 
@@ -16,7 +16,6 @@ const hashPassword = (password) => {
 }
 
 const generateJWTToken = async (user) => {
-    const user = await getUserByEMail(user);
 
     return jwt.sign({
             id: user._id,
@@ -39,7 +38,7 @@ const login = async (req, res) => {
         })
     }
 
-    let user = await getUserByEMail(user);
+    let user = await getUserByEmail(email);
     user = user._doc;
     if(!user){
         return res.status(404).send({
@@ -50,7 +49,8 @@ const login = async (req, res) => {
     
     const isValid = bcrypt.compareSync(password, user.password);
     if(isValid){
-        const token = generateJWTToken(user);
+        const token = await generateJWTToken(user);
+        
         res.cookie('token', token, {
             httpOnly: true,
             sameSite: 'Strict',
