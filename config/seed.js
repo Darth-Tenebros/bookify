@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const fs = require('fs');
 const User = require('../models/user_model');
 const Business = require('../models/business_model');
 const Service = require('../models/service_model');
@@ -6,8 +7,19 @@ const Staff = require('../models/staff_model');
 const Booking = require('../models/booking_model');
 const Payment = require('../models/payment_model');
 
+const {hashPassword} = require('../middleware/auth/authentication');
+
+
+
 const connectToDB = require('./config');
 connectToDB();
+
+const convertImageToBase64 = (filePath) => {
+    const fileData = fs.readFileSync(filePath);
+    const base64Str = fileData.toString('base64');
+
+    return base64Str;
+}
 
 // Function to seed the database with values for all models
 const seedDatabase = async () => {
@@ -22,8 +34,10 @@ const seedDatabase = async () => {
 
         // Seed Users
         const users = await User.insertMany([
-            { name: 'Alice Smith', email: 'alice@example.com', password: 'password1', role: 'customer' },
-            { name: 'Bob Johnson', email: 'bob@example.com', password: 'password2', role: 'business_owner' }
+            { name: 'Alice Smith', email: 'alice@example.com', password: hashPassword('password1'), role: 'customer' },
+            { name: 'Bob Johnson', email: 'bob@example.com', password: hashPassword('password2'), role: 'business_owner' },
+            { name: 'james allison', email: 'james@example.com', password: hashPassword('password3'), role: 'customer' },
+            { name: 'toto wolff', email: 'toto@example.com', password: hashPassword('password4'), role: 'business_owner' }
         ]);
 
         // Seed Businesses
@@ -33,8 +47,11 @@ const seedDatabase = async () => {
 
         // Seed Services
         const services = await Service.insertMany([
-            { name: 'Haircut', description: 'Basic haircut', price: 30, duration: 30, business: businesses[0]._id },
-            { name: 'Massage', description: 'Full body massage', price: 100, duration: 30, business: businesses[0]._id }
+            { name: 'Amancanca', description: 'amancanca', price: 30, duration: 30, business: businesses[0]._id, image: convertImageToBase64('../images/amancanca.jpg') },
+            { name: 'Cornrows', description: 'flat braided hair', price: 100, duration: 30, business: businesses[0]._id, image: convertImageToBase64('../images/cornrows.jpg') },
+            { name: 'Dreadlocks', description: 'dreadlock starting, washing, and styling', price: 100, duration: 30, business: businesses[0]._id, image: convertImageToBase64('../images/dreadlocks.jpg')},
+            { name: 'Hair Treatment', description: 'hair wash and blow out', price: 100, duration: 30, business: businesses[0]._id, image: convertImageToBase64('../images/hair_wash.jpg') },
+            { name: 'Straight back', description: 'Straight back braids', price: 100, duration: 30, business: businesses[0]._id, image: convertImageToBase64('../images/straight_back.jpg') },
         ]);
 
         // Update Business with Services
@@ -101,7 +118,7 @@ const seedDatabase = async () => {
     }
 };
 
-// seedDatabase();
+seedDatabase();
 
 //test comment
 

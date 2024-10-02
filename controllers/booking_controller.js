@@ -20,7 +20,11 @@ exports.createBooking = async (req, res) => {
 
 exports.getAllBookings = async (req, res) => {
     try {
-        const bookings = await Booking.find({});
+        const bookings = await Booking.find({})
+                            .populate('user', '-password')
+                            .populate('business')
+                            .populate('service')
+                            .populate('staff');
         res.status(200).send({ bookings });
     } catch (error) {
         res.status(500).send({ message: "Server error." });

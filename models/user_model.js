@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
   },
   role: { 
     type: String, 
-    enum: {values: ['customer', 'business_owner'], message: "user model values"},
+    enum: {values: ['customer', 'business_owner', 'admin'], message: "user model values"},
     required: true
   },
   bookings: [{

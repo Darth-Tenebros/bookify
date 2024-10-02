@@ -9,7 +9,6 @@ const connectDB = async function(){
         await mongoose.connect(process.env.MONGO_DB_CONNSTR, {
             dbName: "bookify"
         });
-        console.log(process.env.MONGO_DB_CONNSTR);
     } catch (error) {
         console.log(error);
         console.log('error connecting to db');
