@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+require('dotenv').config();
 
 
 const connectDB = async function(){
@@ -9,6 +10,7 @@ const connectDB = async function(){
             dbName: "bookify"
         });
     } catch (error) {
+        console.log(error);
         console.log('error connecting to db');
     }
     
