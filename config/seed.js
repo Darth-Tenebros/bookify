@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const fs = require('fs');
 const User = require('../models/user_model');
 const Business = require('../models/business_model');
 const Service = require('../models/service_model');
@@ -12,6 +13,13 @@ const {hashPassword} = require('../middleware/auth/authentication');
 
 const connectToDB = require('./config');
 connectToDB();
+
+const convertImageToBase64 = (filePath) => {
+    const fileData = fs.readFileSync(filePath);
+    const base64Str = fileData.toString('base64');
+
+    return base64Str;
+}
 
 // Function to seed the database with values for all models
 const seedDatabase = async () => {
