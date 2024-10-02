@@ -36,7 +36,7 @@ const seedDatabase = async () => {
         const users = await User.insertMany([
             { name: 'Alice Smith', email: 'alice@example.com', password: hashPassword('password1'), role: 'customer' },
             { name: 'Bob Johnson', email: 'bob@example.com', password: hashPassword('password2'), role: 'business_owner' },
-            { name: 'james allison', email: 'james@example.com', password: hashPassword('password3'), role: 'business_owner' },
+            { name: 'james allison', email: 'james@example.com', password: hashPassword('password3'), role: 'customer' },
             { name: 'toto wolff', email: 'toto@example.com', password: hashPassword('password4'), role: 'business_owner' }
         ]);
 
@@ -47,15 +47,11 @@ const seedDatabase = async () => {
 
         // Seed Services
         const services = await Service.insertMany([
-            { name: 'Haircut', description: 'Basic haircut', price: 30, duration: 30, business: businesses[0]._id },
-            { name: 'Massage', description: 'Full body massage', price: 100, duration: 30, business: businesses[0]._id },
-            { name: 'Pedicure', description: 'nails', price: 100, duration: 30, business: businesses[0]._id },
-            { name: 'Manicure', description: 'more nails', price: 100, duration: 30, business: businesses[0]._id },
-            { name: 'Hair Wash', description: 'should be obvious what this is', price: 100, duration: 30, business: businesses[0]._id },
-            { name: 'Wig Install', description: 'glue on hair go brrrrrrrr', price: 100, duration: 30, business: businesses[0]._id },
-            { name: 'Something else', description: 'lorem ipsum im tired', price: 100, duration: 30, business: businesses[0]._id },
-            { name: 'Something else else', description: 'dolo amet im really tired', price: 100, duration: 30, business: businesses[0]._id }
-
+            { name: 'Amancanca', description: 'amancanca', price: 30, duration: 30, business: businesses[0]._id, image: convertImageToBase64('../images/amancanca.jpg') },
+            { name: 'Cornrows', description: 'flat braided hair', price: 100, duration: 30, business: businesses[0]._id, image: convertImageToBase64('../images/cornrows.jpg') },
+            { name: 'Dreadlocks', description: 'dreadlock starting, washing, and styling', price: 100, duration: 30, business: businesses[0]._id, image: convertImageToBase64('../images/dreadlocks.jpg')},
+            { name: 'Hair Treatment', description: 'hair wash and blow out', price: 100, duration: 30, business: businesses[0]._id, image: convertImageToBase64('../images/hair_wash.jpg') },
+            { name: 'Straight back', description: 'Straight back braids', price: 100, duration: 30, business: businesses[0]._id, image: convertImageToBase64('../images/straight_back.jpg') },
         ]);
 
         // Update Business with Services
