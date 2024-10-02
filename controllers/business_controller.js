@@ -20,7 +20,8 @@ exports.createBusiness = async (req, res) => {
 // Get all businesses
 exports.getAllBusinesses = async (req, res) => {
     try {
-        const businesses = await Business.find({});
+        const businesses = await Business.find({})
+                                    .populate('owner', '-password');
         res.status(200).send({ businesses });
     } catch (error) {
         res.status(500).send({ message: "Server error." });
