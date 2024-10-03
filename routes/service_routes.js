@@ -8,6 +8,8 @@ router.get('/services/all/', serviceController.getAllServices);
 
 router.get('/services/:id', serviceController.getServiceById);
 
+router.get('/business/:businessId/services', serviceController.getAllServicesByBusinessId);
+
 router.put('/services/:id', serviceController.updateServiceById);
 
 router.delete('/services/:id', serviceController.deleteServiceById);

@@ -94,3 +94,19 @@ exports.deleteAllServices = async (req, res) => {
         res.status(500).send({ message: "Server error." });
     }
 };
+
+
+exports.getAllServicesByBusinessId = async (req, res) => {
+    const { businessId } = req.params;
+
+    if (!businessId) {
+        return res.status(400).send({ message: "Business ID is required." });
+    }
+
+    try {
+        const services = await Service.find({ business: businessId });
+        res.status(200).send({ services });
+    } catch (error) {
+        res.status(500).send({ message: "Server error." });
+    }
+};
